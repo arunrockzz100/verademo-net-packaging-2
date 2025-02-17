@@ -27,7 +27,9 @@ steps:
 
 - task: Veracode@3
   inputs:
-    ConnectionDetailsSelection: 'Service Connection'
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '$(VID)'
+    apiKey: '$(VKEY)'
     veracodeAppProfile: 'Recent'
     version: '$(build.buildNumber)'
     filepath: 'verascan/veracode-auto-pack-s-sql.zip'
