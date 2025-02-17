@@ -32,7 +32,7 @@ steps:
     apiKey: '$(VKEY)'
     veracodeAppProfile: 'Recent'
     version: '$(build.buildNumber)'
-    filepath: 'verascan/veracode-auto-pack-s-sql.zip'
+    filepath: '$(Build.ArtifactStagingDirectory)/verascan'
     importResults: true
     maximumWaitTime: '360'
 
