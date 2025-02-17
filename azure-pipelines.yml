@@ -15,3 +15,6 @@ steps:
       exit 1
     fi
   displayName: "Install Veracode CLI, Package Code, and Verify Output"
+  env:
+    VERACODE_API_KEY_ID: $(VID)
+    VERACODE_API_KEY_SECRET: $(VKEY)
