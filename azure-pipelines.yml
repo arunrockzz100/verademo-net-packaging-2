@@ -5,16 +5,22 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: |
-    curl -fsS https://tools.veracode.com/veracode-cli/install | sh
-    ./veracode package -das $(Build.SourcesDirectory) --output ./verascan
+- task: Bash@3
+  displayName: "Install Veracode CLI & Package Source Code"
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Install Veracode CLI
+      curl -fsS https://tools.veracode.com/veracode-cli/install | sh
 
-    # Check if the verascan directory exists
-    if [ ! -d "./verascan" ]; then
-      echo "Error: verascan directory not found."
-      exit 1
-    fi
-  displayName: "Install Veracode CLI, Package Code, and Verify Output"
+      # Package the entire source directory
+      ./veracode package -das $(Build.SourcesDirectory) --output $(Build.ArtifactStagingDirectory)/verascan
+
+      # Check if the package exists
+      if [ ! -d "$(Build.ArtifactStagingDirectory)/verascan" ]; then
+        echo "Error: verascan directory not found."
+        exit 1
+      fi
   env:
     VERACODE_API_KEY_ID: $(VID)
     VERACODE_API_KEY_SECRET: $(VKEY)
@@ -24,7 +30,7 @@ steps:
     ConnectionDetailsSelection: 'Service Connection'
     veracodeAppProfile: 'Recent'
     version: '$(build.buildNumber)'
-    filepath: '$(build.artifactstagingdirectory)'
+    filepath: 'verascan/veracode-auto-pack-s-sql.zip'
     importResults: true
     maximumWaitTime: '360'
 
