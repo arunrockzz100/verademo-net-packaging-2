@@ -18,3 +18,14 @@ steps:
   env:
     VERACODE_API_KEY_ID: $(VID)
     VERACODE_API_KEY_SECRET: $(VKEY)
+
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Service Connection'
+    veracodeAppProfile: 'Recent'
+    version: '$(build.buildNumber)'
+    filepath: '$(build.artifactstagingdirectory)'
+    importResults: true
+    maximumWaitTime: '360'
+
+
