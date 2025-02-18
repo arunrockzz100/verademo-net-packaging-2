@@ -35,5 +35,7 @@ steps:
     filepath: '$(Build.ArtifactStagingDirectory)/verascan'
     importResults: true
     maximumWaitTime: '360'
+    toplevel: true
+
 
 
